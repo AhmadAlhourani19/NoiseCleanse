@@ -103,3 +103,13 @@ export async function stopRecording() {
 export async function resetBackend() {
   return postJson("/api/reset");
 }
+
+export async function recordFullImpulseResponse() {
+  const response = await fetch("http://localhost:8000/api/ir/full/offline", {
+    method: "POST",
+  });
+  if (!response.ok) {
+    throw new Error("Failed to record impulse response");
+  }
+  return await response.json();
+}

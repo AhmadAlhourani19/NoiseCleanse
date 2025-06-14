@@ -13,6 +13,7 @@ from uuid import uuid4
 from fastapi.staticfiles import StaticFiles
 import os
 from pathlib import Path
+from .impulse_response import run_full_ir
 
 from Backend import config, impulse_response, offline_deconvolution, live_deconvolution
 
@@ -74,11 +75,12 @@ def stop_recording():
 
 @app.post("/api/ir/full/offline")
 def run_full_ir_offline():
-    path = impulse_response.run_full_ir()
-    ir_data, _ = sf.read(path)
-    global preprocessed_ir
-    preprocessed_ir = impulse_response.preprocess_ir(ir_data, config.FS)
-    return {"status": "Impulse Response captured (offline)", "ir_file": str(path)}
+    try:
+        output_path = impulse_response.run_full_ir()
+        return {"status": "IR recorded", "output": str(output_path)}
+    except Exception as e:
+        print(f"IR recording failed: {e}")
+        raise HTTPException(status_code=500, detail="Failed to record impulse response.")
 
 @app.post("/api/ir/full/live")
 def run_full_ir_live():
@@ -145,27 +147,6 @@ async def deconvolve(
     # Return RELATIVE path so the browser can fetch it
     relative_url = f"/output/{output_path.name}"
     return {"status": "done", "output_file": relative_url}
-
-@app.post("/api/prepare-ir")
-async def prepare_ir(ir: UploadFile = File(...)):
-    ir_path = UPLOAD_DIR / f"raw_ir_{uuid.uuid4().hex}.wav"
-    with ir_path.open("wb") as f:
-        shutil.copyfileobj(ir.file, f)
-    data, fs = sf.read(ir_path)
-    processed = impulse_response.preprocess_ir(data, fs)
-    sf.write(config.IR_FILE, processed, fs)
-    return {"status": "IR processed", "ir_file": str(config.IR_FILE)}
-
-@app.post("/api/record/start")
-def start_recording():
-    global recorder
-    if recorder is not None:
-        return {"status": "error", "message": "Recording already in progress."}
-
-    duration_seconds = 10
-    fs = config.FS
-    recorder = sd.rec(int(duration_seconds * fs), samplerate=fs, channels=1)
-    return {"status": "recording started"}
 
 @app.post("/api/record/stop")
 def stop_recording():

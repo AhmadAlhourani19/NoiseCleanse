@@ -7,6 +7,7 @@ import {
   fetchOfflinePlots,
   startLive,
   stopLive,
+  recordFullImpulseResponse 
 } from '../api/noiseCleanseAPI';
 
 function ControlsPanel({ setTimePlot, setFreqPlot, setShowResults }) {
@@ -116,6 +117,17 @@ const handlePlay = () => {
     setFeedback('Download started.');
   };
 
+const handleRecordFullIR = async () => {
+  try {
+    alert("Recording impulse response. Please stay quiet during playback...");
+    const result = await recordFullImpulseResponse();
+    alert(result.status || "Impulse response recorded!");
+  } catch (error) {
+    console.error("Recording IR failed:", error);
+    alert("Failed to record impulse response.");
+  }
+};
+
   return (
     <section className="panel controls-panel">
       <h2>Controls</h2>
@@ -146,6 +158,9 @@ const handlePlay = () => {
         <button className="btn-deconv" onClick={handleOfflineDeconv}>⚙️ Offline Deconvolution</button>
         <button className="btn-live" onClick={handleLiveToggle}>
           {liveRunning ? '⏹ Stop Live Deconvolution' : '🔴 Start Live Deconvolution'}
+        </button>
+        <button className="btn btn-ir" onClick={handleRecordFullIR}>
+          Record Impulse Response
         </button>
       </div>
 
