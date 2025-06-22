@@ -1,5 +1,4 @@
-# noise_cleanse/main.py
-
+"Used for Testing Backend"
 import time
 from Backend import (
     config,

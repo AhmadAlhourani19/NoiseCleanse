@@ -1,23 +1,21 @@
-/* ========== Variables & Reset ========== */
 :root {
   --font:           'Poppins', sans-serif;
-  --gradient-start: #E3F2FD;  /* pastel sky-blue */
-  --gradient-end:   #E4F0FC;  /* pastel blush-pink */
-  --p1:             #8FAADC;      /* primary buttons, headings */
-  --p2:             #6DC8B3;      /* secondary buttons, toggles */
-  --accent:         #FFD97D;  /* “Save” button, highlights */
+  --gradient-start: #E3F2FD; 
+  --gradient-end:   #E4F0FC; 
+  --p1:             #8FAADC;    
+  --p2:             #6DC8B3;      
+  --accent:         #FFD97D; 
 
-  --bg-light:       #F0F5FF;   /* very pale blue */
-  --bg-dark:        #FFFFFF;   /* card backgrounds */
-  --text:           #2D3748;   /* almost-black slate */
-  --muted:          #718096;   /* grey-blue for borders/text */
-  --r:              16px;     /* border radius */
+  --bg-light:       #F0F5FF;   
+  --bg-dark:        #FFFFFF;   
+  --text:           #2D3748;  
+  --muted:          #718096;   
+  --r:              16px;    
   --shadow:         0 8px 24px rgba(0,0,0,0.08);
   --gap:            1rem;
   --gap-sm:         0.5rem;
 }
 
-/* box-sizing & remove default margins/padding */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -33,12 +31,10 @@ html, body {
   background-size: cover;
 }
 
-/* utility to hide elements */
 .hidden {
   display: none !important;
 }
 
-/* ========== Header ========== */
 .site-header {
   text-align: center;
   margin: 2rem 0;
@@ -57,7 +53,6 @@ html, body {
   font-size: 1.2rem;
 }
 
-/* ========== Dark Mode Toggle ========== */
 .dark-mode-toggle {
   position: absolute;
   top: 1rem;
@@ -110,7 +105,6 @@ input:checked + .slider::before {
   user-select: none;
 }
 
-/* ========== Panels Container ========== */
 .panels {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -125,8 +119,6 @@ input:checked + .slider::before {
   }
 }
 
-
-/* ========== Panel Base Styles ========== */
 .panel {
   background: #ffffff;
   border-radius: var(--r);
@@ -134,14 +126,12 @@ input:checked + .slider::before {
   padding: var(--gap);
 }
 
-/* ========== Controls Panel ========== */
 .controls-panel h2 {
   margin-bottom: var(--gap);
   color: var(--p1);
   font-weight: 600;
 }
 
-/* stack label + input/select vertically */
 .form-row {
   display: flex;
   flex-direction: column;
@@ -162,7 +152,6 @@ input:checked + .slider::before {
   background: #FAFBFF;
 }
 
-/* ========== Drop-area Styling ========== */
 .drop-area {
   border: 2px dashed var(--muted);
   border-radius: var(--r);
@@ -187,12 +176,10 @@ input:checked + .slider::before {
   border-color: var(--p1);
 }
 
-/* hide real <input> inside drop-area */
 .drop-area input[type="file"] {
   display: none;
 }
 
-/* ========== Buttons ========== */
 .buttons-row {
   display: flex;
   gap: var(--gap);
@@ -219,36 +206,33 @@ button:disabled {
   cursor: not-allowed;
 }
 
-/* primary/secondary/tertiary */
 .btn-record {
-  background: #E53E3E;   /* vivid tomato red */
+  background: #E53E3E;   
   color: #fff;
 }
 
 .btn-upload {
-  background: #48BB78;   /* minty, fresh */
+  background: #48BB78;  
   color: #fff;
 }
 
 .btn-deconv,
 .btn-play,
 .btn-view {
-  background: var(--p1);  /* e.g. #8FAADC */
+  background: var(--p1);  
   color: #fff;
 }
 
 .btn-save {
-  background: #FFD97D;   /* warm pastel yellow */
-  color: #2D3748;        /* dark slate for contrast */
+  background: #FFD97D;  
+  color: #2D3748;       
 }
-/* ========== Results Panel ========== */
 .results-panel h2 {
   margin-bottom: var(--gap);
   color: var(--p1);
   font-weight: 600;
 }
 
-/* ========== Visualization Grid ========== */
 .viz-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
@@ -269,7 +253,6 @@ button:disabled {
   font-weight: 500;
 }
 
-/* placeholder wave */
 .placeholder {
   height: 100px;
   border: 1px dashed #CBD5E0;
@@ -286,7 +269,6 @@ button:disabled {
   to   { background-position: -200px 0; }
 }
 
-/* when real plots arrive */
 .viz-card img {
   width: 100%;
   height: auto;
@@ -296,7 +278,6 @@ button:disabled {
   background: #FAFBFF;
 }
 
-/* ========== Full-page gradient backstop ========== */
 body::before {
   content: "";
   position: fixed;
@@ -305,7 +286,6 @@ body::before {
   background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
 }
 
-/* ========== Dark Mode Styles ========== */
 body.dark-mode {
   background: linear-gradient(135deg, #2D3748 0%, #1A202C 100%) fixed;
   color: #E2E8F0;
@@ -329,12 +309,12 @@ body.dark-mode .form-row select {
 }
 
 body.dark-mode .buttons-row button {
-  background: #4F5BFF;  /* softer indigo */
+  background: #4F5BFF; 
   color: #FFF;
 }
 
 body.dark-mode .btn-save {
-  background: #ED64A6;  /* your pastel pink accent */
+  background: #ED64A6; 
   color: #1A202C;
 }
 
@@ -344,49 +324,41 @@ body.dark-mode .placeholder {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 50'%3E%3Cpath fill='none' stroke='%234A5568' stroke-width='2' d='M0 25 Q25 0 50 25 T100 25 T150 25 T200 25'/%3E%3C/svg%3E");
 }
 
-/* ─── Single-panel mode: center the Controls panel ─── */
 .panels.single {
-  display: block;        /* drop out of grid mode */
-  max-width: 600px;      /* whichever max width you prefer */
-  margin: 0 auto;        /* horizontally center it */
-  padding: 0;            /* remove any extra side padding */
+  display: block;        
+  max-width: 600px;    
+  margin: 0 auto;        
+  padding: 0;           
 }
 
 .panels.single .controls-panel {
-  width: 100%;           /* fill that max-width track */
+  width: 100%;         
 }
 
-/* —————————————————————————————————————————
-   Drag-&-Drop Areas in Dark Mode
-   ————————————————————————————————————————— */
+
 body.dark-mode .drop-area {
-  /* match your panel card bg */
   background: #2A2F3A;    
-  /* same muted border */
   border-color: #4A5568;  
-  color: #E2E8F0;         /* light text */
+  color: #E2E8F0;         
 }
-/* make the drop-message text slightly faded */
 .drop-area .drop-message {
-  color: rgba(0, 0, 0, 0.5);  /* 50% opacity black on light bg */
+  color: rgba(0, 0, 0, 0.5);  
 }
 body.dark-mode .drop-area .drop-message {
-  color: rgba(255, 255, 255, 0.6);  /* 60% opacity white on dark bg */
+  color: rgba(255, 255, 255, 0.6);  
 }
 
-/* keep the dragover highlight */
 body.dark-mode .drop-area.dragover {
   background: rgba(102, 126, 234, 0.15);
 }
 
 body.dark-mode .switch-label {
-  color: #f0f0f0;  /* or any bright pastel you prefer */
+  color: #f0f0f0;  
 }
 
 .drop-area, .placeholder {
   border: 2px dashed var(--muted);
 }
-/* in dark mode, make drop-area text white and lighten its dashed border */
 body.dark-mode .drop-area .drop-message {
   color: #fff !important;
   border-color: rgba(255,255,255,0.4);
@@ -396,7 +368,7 @@ body.dark-mode .drop-area label {
 }
 
 body.dark-mode .form-row label {
-  color: #E2E8F0; /* light slate color */
+  color: #E2E8F0; 
 }
 
 body.dark-mode .form-row select {
@@ -406,7 +378,7 @@ body.dark-mode .form-row select {
 }
 
 .btn-ir {
-  background: linear-gradient(to right, #FF7E5F, #FEB47B); /* soft orange-pink gradient */
+  background: linear-gradient(to right, #FF7E5F, #FEB47B); 
   color: #fff;
   font-weight: 600;
 }

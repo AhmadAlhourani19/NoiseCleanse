@@ -42,7 +42,7 @@ def start_recording():
         return {"status": "error", "message": "Recording already in progress."}
     duration_seconds = 10
     fs = config.FS
-    print("🎙️ Starting recording...")
+    print("Starting recording...")
     recorder = sd.rec(int(duration_seconds * fs), samplerate=fs, channels=1)
     return {"status": "recording started"}
 
@@ -52,7 +52,7 @@ def stop_recording():
     if recorder is None:
         return {"status": "error", "message": "No recording in progress."}
 
-    print("⏹️ Stopping recording...")
+    print("Stopping recording...")
     sd.wait()
     recorded_data = recorder
     recorder = None
@@ -89,11 +89,6 @@ def run_full_ir_live():
     live_deconvolution.start_live_deconv(pre_ir)
     return {"status": "Impulse Response captured and live deconvolution started", "ir_file": str(path)}
 
-
-
-# ---------------------------------------------------------------------------
-#  OFFLINE  DECONVOLUTION  ENDPOINT  (plays back correctly now)
-# ---------------------------------------------------------------------------
 from typing import Optional
 from uuid import uuid4
 ...
@@ -112,7 +107,6 @@ async def deconvolve(
     """
     global last_uploaded_signal
 
-    # -------- Locate signal WAV --------
     if signal is None:
         if last_uploaded_signal is None:
             raise HTTPException(400, "No signal uploaded or recorded.")
@@ -125,7 +119,6 @@ async def deconvolve(
 
     sig_data, _ = sf.read(signal_path)
 
-    # -------- Locate / preprocess IR --------
     if ir is not None:
         ir_path = UPLOAD_DIR / f"ir_{uuid4().hex}.wav"
         with ir_path.open("wb") as f:
@@ -137,13 +130,11 @@ async def deconvolve(
     else:
         raise HTTPException(400, "No IR provided or preloaded.")
 
-    # -------- Deconvolve + SAVE --------
     recovered = offline_deconvolution.offline_deconvolve(sig_data, ir_pre, config.FS, gain=gain)
 
-    output_path = Path(config.RECOVERED_FILE)        # e.g. .../output/recovered_output.wav
+    output_path = Path(config.RECOVERED_FILE)     
     offline_deconvolution.save_output_audio(recovered, config.FS, output_path)
 
-    # Return RELATIVE path so the browser can fetch it
     relative_url = f"/output/{output_path.name}"
     return {"status": "done", "output_file": relative_url}
 
@@ -191,7 +182,6 @@ async def load_ir_for_live(
     output_device = request.query_params.get("output_device")
     volume = request.query_params.get("volume", 1.0)
 
-    # Convert to int or None
     input_device = int(input_device) if input_device and input_device.isdigit() else None
     output_device = int(output_device) if output_device and output_device.isdigit() else None
     volume = float(volume)

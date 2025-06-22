@@ -85,13 +85,13 @@ def postprocess_audio(output: np.ndarray, fs: int) -> np.ndarray:
     return output
 
 def run_full_ir(duration=config.SWEEP_DURATION, fs=config.FS, output_path=config.IR_FILE):
-    print("▶ Playing sweep and recording response...")
+    print("Playing sweep and recording response...")
     sweep = generate_sweep(fs, duration, config.FREQ_START, config.FREQ_END)
     recording = sd.playrec(sweep, samplerate=fs, channels=1, dtype='float32')
     sd.wait()
     recorded = recording.flatten()
     ir = extract_ir(recorded, sweep, fs)
-    print("✅ IR recorded and extracted.")
+    print("IR recorded and extracted.")
     sf.write(output_path, ir, fs)
 
     return output_path

@@ -1,5 +1,3 @@
-# noise_cleanse/audio_io.py
-
 import os
 import numpy as np
 import sounddevice as sd

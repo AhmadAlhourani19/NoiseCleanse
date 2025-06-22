@@ -1,5 +1,3 @@
-# noise_cleanse/config.py
-
 import os
 
 # === Sampling & Sweep ===

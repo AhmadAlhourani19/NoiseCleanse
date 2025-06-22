@@ -23,6 +23,6 @@ function ResultsPanel() {
       </div>
     </div>
   );
-} //Test
+}
 
 export default ResultsPanel;

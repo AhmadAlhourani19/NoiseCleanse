@@ -1,5 +1,3 @@
-// src/api/noiseCleanseAPI.js
-
 const BASE_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
 const buildUrl = (path) => `${BASE_URL}${path}`;
 
@@ -38,9 +36,6 @@ async function getJson(path) {
   return response.json();
 }
 
-// -----------------------------
-// IR related
-// -----------------------------
 export async function prepareIR(irFile) {
   const form = new FormData();
   form.append("ir", irFile);
@@ -55,9 +50,6 @@ export async function recordFullIRLive() {
   return postJson("/api/ir/full/live");
 }
 
-// -----------------------------
-// Deconvolution (Offline)
-// -----------------------------
 export async function offlineDeconvolve(signalFile, irFile) {
   const form = new FormData();
   form.append("signal", signalFile);
@@ -69,9 +61,6 @@ export async function fetchOfflinePlots() {
   return getJson("/api/plot/offline");
 }
 
-// -----------------------------
-// Live Deconvolution
-// -----------------------------
 export async function startLive(irFile) {
   const form = new FormData();
   form.append("ir", irFile);
@@ -86,9 +75,6 @@ export async function liveStatus() {
   return getJson("/api/live/status");
 }
 
-// -----------------------------
-// Recording
-// -----------------------------
 export async function startRecording() {
   return postJson("/api/record/start");
 }
@@ -97,9 +83,6 @@ export async function stopRecording() {
   return postJson("/api/record/stop");
 }
 
-// -----------------------------
-// Utility / Dev
-// -----------------------------
 export async function resetBackend() {
   return postJson("/api/reset");
 }

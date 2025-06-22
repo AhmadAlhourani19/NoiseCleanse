@@ -1,5 +1,3 @@
-# noise_cleanse/live_deconvolution.py
-
 import numpy as np
 import sounddevice as sd
 from scipy.signal import lfilter
@@ -9,7 +7,6 @@ from scipy.fft import fft, ifft
 from . import config
 from .utils import auto_lambda_from_ir
 
-# Global state for streaming
 _stream = {
     "input": None,
     "output": None,
@@ -57,7 +54,7 @@ def spectral_denoise(frame, noise_profile, fs):
     phase = np.angle(X)
 
     noise_threshold = 1.5 * noise_profile
-    suppression_factor = 0.6  # light suppression
+    suppression_factor = 0.6 
 
     mag = np.where(mag < noise_threshold, mag * suppression_factor, mag)
 
@@ -72,22 +69,18 @@ def audio_callback(indata, outdata, frames, time, status):
 
     x = indata[:, 0]
 
-    # Deconvolve
     y, _stream["fir_state"] = lfilter(
         _stream["inverse_fir"], [1.0], x, zi=_stream["fir_state"]
     )
 
-    # Apply energy gate (simple noise gate)
     energy = np.mean(y**2)
-    threshold = 1e-4  # This value is key, see tips below
+    threshold = 1e-4  
 
     if energy < threshold:
-        y *= 0.2  # Reduce background when silent
+        y *= 0.2  
 
-    # Apply gain
     y *= config.LIVE_GAIN
 
-    # Assign to output buffer
     outdata[:, 0] = y[:frames]
 
 
@@ -99,8 +92,8 @@ def start_live_deconv(ir: np.ndarray, fs: int = config.FS,
     if _stream["input"] is not None:
         stop_live_deconv()
 
-    print("→ Input device:", input_device)
-    print("→ Output device:", output_device)
+    print("Input device:", input_device)
+    print("Output device:", output_device)
 
     inv_fir = compute_inverse_fir(ir, config.IMPULSE_LENGTH)
     fir_state = np.zeros(len(inv_fir) - 1)
@@ -116,9 +109,9 @@ def start_live_deconv(ir: np.ndarray, fs: int = config.FS,
         outdata[:, 0] = y[:frames]
 
     try:
-        sd.default.device = (input_device, output_device)  # <- this line is new
+        sd.default.device = (input_device, output_device) 
     except Exception as e:
-        print("⚠️ Device selection failed:", e)
+        print("Device selection failed:", e)
 
     _stream["input"] = sd.Stream(
         samplerate=fs,
@@ -129,7 +122,7 @@ def start_live_deconv(ir: np.ndarray, fs: int = config.FS,
     )
 
     _stream["input"].start()
-    print("🎧 Live deconvolution started.")
+    print("Live deconvolution started.")
 
 
 def stop_live_deconv():

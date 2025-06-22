@@ -1,5 +1,3 @@
-# noise_cleanse/offline_deconvolution.py
-
 import numpy as np
 from scipy.signal import butter, filtfilt, spectrogram, istft, find_peaks, iirnotch
 from scipy.fft import fft, ifft
@@ -70,7 +68,7 @@ def normalize(signal: np.ndarray, peak: float = 0.999) -> np.ndarray:
 
 def apply_static_notch_filters(signal: np.ndarray, fs: int) -> np.ndarray:
     print("Applying static notch filters at 60Hz and harmonics...")
-    notch_freqs = [60, 120, 180, 240]  # You can add more if needed
+    notch_freqs = [60, 120, 180, 240]  
     for freq in notch_freqs:
         low = (freq - 1) / (fs / 2)
         high = (freq + 1) / (fs / 2)
@@ -88,7 +86,6 @@ def refined_spectral_gate(signal: np.ndarray, fs: int) -> np.ndarray:
     noise_floor = np.median(S, axis=1, keepdims=True)
     mask = S < (1.5 * noise_floor)
 
-    # Use magnitude mask
     S_masked = S * (~mask)
     phase = np.angle(fft(signal, n=win_size))[:len(S_masked)]
     S_complex = S_masked * np.exp(1j * phase[:, np.newaxis])
@@ -104,7 +101,6 @@ def offline_deconvolve(signal: np.ndarray, ir: np.ndarray, fs: int, gain=1.0) ->
         print("Invalid input signal or IR.")
         return np.zeros(44100)
 
-    # Deconvolution via spectral division
     n = len(signal) + len(ir) - 1
     SIG = np.fft.fft(signal, n=n)
     IR = np.fft.fft(ir, n=n)
@@ -113,24 +109,19 @@ def offline_deconvolve(signal: np.ndarray, ir: np.ndarray, fs: int, gain=1.0) ->
     recovered = np.nan_to_num(recovered)
     recovered *= gain
 
-    # Static notch filters
     recovered = apply_static_notch_filters(recovered, fs)
 
-    # High-pass
     b_hp, a_hp = butter(2, 80 / (fs / 2), btype='high')
     recovered = filtfilt(b_hp, a_hp, recovered)
 
-    # Low-pass
     if fs / 2 > 15000:
         b_lp, a_lp = butter(2, 15000 / (fs / 2), btype='low')
         recovered = filtfilt(b_lp, a_lp, recovered)
 
-    # Normalize
     max_val = np.max(np.abs(recovered)) + 1e-9
     recovered = recovered / max_val
     recovered = np.clip(recovered, -1.0, 1.0)
 
-    # 🔻 Final noise cleanup
     recovered = smart_spectral_gate(recovered, fs)
 
     print(f"Output stats: min={recovered.min():.4f}, max={recovered.max():.4f}, mean={recovered.mean():.4f}")

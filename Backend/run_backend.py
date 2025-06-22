@@ -9,7 +9,7 @@ if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
 
-from Backend.restAPIBackend import app as fastapi_app   # ← key line
+from Backend.restAPIBackend import app as fastapi_app 
 
 from uvicorn.config import LOGGING_CONFIG as BASE_LOG
 
@@ -21,12 +21,12 @@ import sounddevice as sd
 
 def main() -> None:
     try:
-        print("🔍 Available audio devices at backend launch:")
+        print("Available audio devices at backend launch:")
         devices = sd.query_devices()
         for i, d in enumerate(devices):
             print(f"  [{i}] {d['name']} (inputs: {d['max_input_channels']}, outputs: {d['max_output_channels']})")
     except Exception as e:
-        print(f"⚠️ Failed to list audio devices: {e}")
+        print(f"Failed to list audio devices: {e}")
 
     uvicorn.run(
         fastapi_app,
