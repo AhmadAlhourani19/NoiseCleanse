@@ -1,0 +1,149 @@
+/* src/styles/styles.css — FINAL */
+/* -------------------------------------------------------------------------- */
+/*  DESIGN TOKENS                                                              */
+/* -------------------------------------------------------------------------- */
+:root {
+  --font:             'Poppins', sans-serif;
+  --gradient-start:   #e3f2fd;  /* soft sky */
+  --gradient-end:     #e4f0fc;  /* blush */
+  --p1:               #667eea;  /* primary blue‑violet */
+  --p2:               #48bb78;  /* green (upload / live) */
+  --accent:           #f6ad55;  /* orange (view graphs) */
+  --text:             #2d3748;  /* gray‑900 */
+  --muted:            #718096;  /* gray‑500 */
+  --radius:           16px;
+  --shadow:           0 8px 24px rgba(0,0,0,0.08);
+  --gap:              1rem;
+}
+
+/* -------------------------------------------------------------------------- */
+/*  RESET & BASE                                                              */
+/* -------------------------------------------------------------------------- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html,body {
+  min-height: 100vh;
+  font-family: var(--font);
+  color: var(--text);
+  line-height: 1.6;
+  background: linear-gradient(45deg,var(--gradient-start) 0%,var(--gradient-end) 100%) fixed;
+  background-size: cover;
+}
+
+body::before {          /* faint white overlay for a softer look */
+  content: "";
+  position: fixed; inset: 0; z-index: -1;
+  background: linear-gradient(135deg,#eef2ff,#f7f8fa);
+}
+
+.app { padding: 2rem 1rem; }
+
+/* -------------------------------------------------------------------------- */
+/*  HEADER                                                                    */
+/* -------------------------------------------------------------------------- */
+.site-header { text-align: center; margin-bottom: 2.5rem; }
+.site-header h1 {
+  font-size: clamp(2.5rem,6vw,4rem);
+  font-weight: 700;
+  color: var(--p1);
+  margin-bottom: 0.25rem;
+}
+.tagline { font-size: 1.35rem; color: var(--muted); }
+
+/* -------------------------------------------------------------------------- */
+/*  PANELS LAYOUT                                                             */
+/* -------------------------------------------------------------------------- */
+.panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;   /* default two‑column */
+  gap: var(--gap);
+  padding: 0 var(--gap);
+}
+
+/* Single‑column mode (hide results) */
+.panels.single { grid-template-columns: 1fr; justify-items: center; }
+
+/* -------------------------------------------------------------------------- */
+/*  CONTROLS PANEL                                                            */
+/* -------------------------------------------------------------------------- */
+.panel {
+  background: #ffffff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--gap);
+}
+
+.controls-panel { width: 100%; max-width: 620px; }
+.controls-panel h2 { color: var(--p1); margin-bottom: var(--gap); }
+
+.form-row {
+  display: flex; flex-direction: column;
+  gap: 0.5rem; margin-bottom: var(--gap);
+}
+.form-row label { font-size: 0.95rem; }
+.form-row input, .form-row select {
+  padding: 0.65rem 0.9rem;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius);
+  background: #fafbff;
+}
+
+/* -------------------------------------------------------------------------- */
+/*  BUTTONS                                                                   */
+/* -------------------------------------------------------------------------- */
+.buttons-row { display: flex; gap: var(--gap); margin-bottom: var(--gap); }
+.buttons-row button {
+  flex: 1;
+  padding: 0.8rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  color: #ffffff;         /* default white text */
+}
+.buttons-row button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+/* Specific palettes */
+.btn-record   { background: #e53e3e; } /* red */
+.btn-upload   { background: var(--p2); }
+.btn-deconv   { background: var(--p1); }
+.btn-live     { background: var(--p2); }
+.btn-save     { background: #ffff00; color: var(--text); } /* bright yellow */
+.btn-play     { background: var(--p1); }
+.btn-view     { background: var(--accent); color: var(--text); }
+
+/* -------------------------------------------------------------------------- */
+/*  FEEDBACK                                                                  */
+/* -------------------------------------------------------------------------- */
+.feedback { margin-top: 0.75rem; font-size: 0.95rem; color: var(--muted); }
+
+/* -------------------------------------------------------------------------- */
+/*  RESULTS PANEL                                                             */
+/* -------------------------------------------------------------------------- */
+.results-panel h2 { color: var(--p1); margin-bottom: var(--gap); }
+
+.viz-grid { display: flex; flex-wrap: wrap; gap: var(--gap); }
+.viz-card {
+  flex: 1 1 45%; min-width: 280px;
+  background: rgba(255,255,255,0.9);
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius);
+  padding: var(--gap);
+  text-align: center;
+}
+.viz-card h3 { margin-bottom: var(--gap); font-size: 1rem; font-weight: 500; }
+
+/* Plot / placeholder visuals */
+.placeholder, .viz-card img {
+  width: 100%; max-height: 170px;
+  object-fit: contain;
+  border-radius: var(--radius);
+  border: 1px dashed #cbd5e0;
+  background: #fafbff;
+}
+
+@media (max-width: 900px) { .panels { grid-template-columns: 1fr; } }

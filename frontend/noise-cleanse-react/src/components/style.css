@@ -1,0 +1,412 @@
+/* ========== Variables & Reset ========== */
+:root {
+  --font:           'Poppins', sans-serif;
+  --gradient-start: #E3F2FD;  /* pastel sky-blue */
+  --gradient-end:   #E4F0FC;  /* pastel blush-pink */
+  --p1:             #8FAADC;      /* primary buttons, headings */
+  --p2:             #6DC8B3;      /* secondary buttons, toggles */
+  --accent:         #FFD97D;  /* “Save” button, highlights */
+
+  --bg-light:       #F0F5FF;   /* very pale blue */
+  --bg-dark:        #FFFFFF;   /* card backgrounds */
+  --text:           #2D3748;   /* almost-black slate */
+  --muted:          #718096;   /* grey-blue for borders/text */
+  --r:              16px;     /* border radius */
+  --shadow:         0 8px 24px rgba(0,0,0,0.08);
+  --gap:            1rem;
+  --gap-sm:         0.5rem;
+}
+
+/* box-sizing & remove default margins/padding */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  min-height: 100vh;
+  font-family: var(--font);
+  line-height: 1.6;
+  color: var(--text);
+  background: linear-gradient(45deg, var(--gradient-start) 0%, var(--gradient-end) 100%) fixed no-repeat;
+  background-size: cover;
+}
+
+/* utility to hide elements */
+.hidden {
+  display: none !important;
+}
+
+/* ========== Header ========== */
+.site-header {
+  text-align: center;
+  margin: 2rem 0;
+  position: relative;
+}
+
+.site-header h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--p1);
+}
+
+.tagline {
+  margin-top: 0.5rem;
+  color: var(--muted);
+  font-size: 1.2rem;
+}
+
+/* ========== Dark Mode Toggle ========== */
+.dark-mode-toggle {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.switch input {
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #ccc;
+  border-radius: 34px;
+  transition: .4s;
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  height: 18px; width: 18px;
+  left: 3px; bottom: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background: var(--p1);
+}
+
+input:checked + .slider::before {
+  transform: translateX(26px);
+}
+
+.switch-label {
+  font-size: 0.9rem;
+  color: var(--text);
+  user-select: none;
+}
+
+/* ========== Panels Container ========== */
+.panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap);
+  padding: 0 var(--gap);
+  align-items: start;
+}
+
+@media (max-width: 800px) {
+  .panels {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ========== Panel Base Styles ========== */
+.panel {
+  background: #ffffff;
+  border-radius: var(--r);
+  box-shadow: var(--shadow);
+  padding: var(--gap);
+}
+
+/* ========== Controls Panel ========== */
+.controls-panel h2 {
+  margin-bottom: var(--gap);
+  color: var(--p1);
+  font-weight: 600;
+}
+
+/* stack label + input/select vertically */
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+  margin-bottom: var(--gap);
+}
+
+.form-row label {
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.form-row input,
+.form-row select {
+  padding: 0.65rem 0.9rem;
+  border: 1px solid #E2E8F0;
+  border-radius: var(--r);
+  background: #FAFBFF;
+}
+
+/* ========== Drop-area Styling ========== */
+.drop-area {
+  border: 2px dashed var(--muted);
+  border-radius: var(--r);
+  background: #FAFBFF;
+  padding: 1.25rem;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  margin-bottom: var(--gap);
+}
+
+.drop-area .drop-message {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.4;
+  user-select: none;
+}
+
+.drop-area:hover,
+.drop-area.dragover {
+  background: #F0F4FF;
+  border-color: var(--p1);
+}
+
+/* hide real <input> inside drop-area */
+.drop-area input[type="file"] {
+  display: none;
+}
+
+/* ========== Buttons ========== */
+.buttons-row {
+  display: flex;
+  gap: var(--gap);
+  margin-bottom: var(--gap);
+}
+
+.buttons-row button {
+  flex: 1;
+  padding: 0.75rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--r);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.buttons-row button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* primary/secondary/tertiary */
+.btn-record {
+  background: #E53E3E;   /* vivid tomato red */
+  color: #fff;
+}
+
+.btn-upload {
+  background: #48BB78;   /* minty, fresh */
+  color: #fff;
+}
+
+.btn-deconv,
+.btn-play,
+.btn-view {
+  background: var(--p1);  /* e.g. #8FAADC */
+  color: #fff;
+}
+
+.btn-save {
+  background: #FFD97D;   /* warm pastel yellow */
+  color: #2D3748;        /* dark slate for contrast */
+}
+/* ========== Results Panel ========== */
+.results-panel h2 {
+  margin-bottom: var(--gap);
+  color: var(--p1);
+  font-weight: 600;
+}
+
+/* ========== Visualization Grid ========== */
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+  gap: var(--gap);
+}
+
+.viz-card {
+  background: rgba(255,255,255,0.8);
+  border: 1px solid #E2E8F0;
+  border-radius: var(--r);
+  padding: var(--gap);
+  text-align: center;
+}
+
+.viz-card h3 {
+  margin-bottom: var(--gap-sm);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* placeholder wave */
+.placeholder {
+  height: 100px;
+  border: 1px dashed #CBD5E0;
+  border-radius: var(--r);
+  background-color: #FAFBFF;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20200%2050'%3E%3Cpath%20fill='none'%20stroke='%23CBD5E0'%20stroke-width='2'%20d='M0%2025%20Q25%200%2050%2025%20T100%2025%20T150%2025%20T200%2025'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+  animation: wave-scroll 4s linear infinite;
+}
+
+@keyframes wave-scroll {
+  from { background-position: 0 0; }
+  to   { background-position: -200px 0; }
+}
+
+/* when real plots arrive */
+.viz-card img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--r);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  margin-bottom: var(--gap-sm);
+  background: #FAFBFF;
+}
+
+/* ========== Full-page gradient backstop ========== */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+}
+
+/* ========== Dark Mode Styles ========== */
+body.dark-mode {
+  background: linear-gradient(135deg, #2D3748 0%, #1A202C 100%) fixed;
+  color: #E2E8F0;
+}
+
+body.dark-mode .panel {
+  background: #2D3748;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.6);
+}
+
+body.dark-mode .viz-card {
+  background: #1F242D;
+  border-color: #4A5568;
+}
+
+body.dark-mode .form-row input,
+body.dark-mode .form-row select {
+  background: #1A202C;
+  border-color: #4A5568;
+  color: #E2E8F0;
+}
+
+body.dark-mode .buttons-row button {
+  background: #4F5BFF;  /* softer indigo */
+  color: #FFF;
+}
+
+body.dark-mode .btn-save {
+  background: #ED64A6;  /* your pastel pink accent */
+  color: #1A202C;
+}
+
+body.dark-mode .placeholder {
+  background-color: #2A2F3A;
+  border-color: #4A5568;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 50'%3E%3Cpath fill='none' stroke='%234A5568' stroke-width='2' d='M0 25 Q25 0 50 25 T100 25 T150 25 T200 25'/%3E%3C/svg%3E");
+}
+
+/* ─── Single-panel mode: center the Controls panel ─── */
+.panels.single {
+  display: block;        /* drop out of grid mode */
+  max-width: 600px;      /* whichever max width you prefer */
+  margin: 0 auto;        /* horizontally center it */
+  padding: 0;            /* remove any extra side padding */
+}
+
+.panels.single .controls-panel {
+  width: 100%;           /* fill that max-width track */
+}
+
+/* —————————————————————————————————————————
+   Drag-&-Drop Areas in Dark Mode
+   ————————————————————————————————————————— */
+body.dark-mode .drop-area {
+  /* match your panel card bg */
+  background: #2A2F3A;    
+  /* same muted border */
+  border-color: #4A5568;  
+  color: #E2E8F0;         /* light text */
+}
+/* make the drop-message text slightly faded */
+.drop-area .drop-message {
+  color: rgba(0, 0, 0, 0.5);  /* 50% opacity black on light bg */
+}
+body.dark-mode .drop-area .drop-message {
+  color: rgba(255, 255, 255, 0.6);  /* 60% opacity white on dark bg */
+}
+
+/* keep the dragover highlight */
+body.dark-mode .drop-area.dragover {
+  background: rgba(102, 126, 234, 0.15);
+}
+
+body.dark-mode .switch-label {
+  color: #f0f0f0;  /* or any bright pastel you prefer */
+}
+
+.drop-area, .placeholder {
+  border: 2px dashed var(--muted);
+}
+/* in dark mode, make drop-area text white and lighten its dashed border */
+body.dark-mode .drop-area .drop-message {
+  color: #fff !important;
+  border-color: rgba(255,255,255,0.4);
+}
+body.dark-mode .drop-area label {
+  color: #fff;
+}
+
+body.dark-mode .form-row label {
+  color: #E2E8F0; /* light slate color */
+}
+
+body.dark-mode .form-row select {
+  color: #E2E8F0;
+  background-color: #1A202C;
+  border-color: #4A5568;
+}
+
+.btn-ir {
+  background: linear-gradient(to right, #FF7E5F, #FEB47B); /* soft orange-pink gradient */
+  color: #fff;
+  font-weight: 600;
+}
