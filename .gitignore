@@ -15,27 +15,20 @@ temp_uploads/
 ./temp_plots/
 ./temp_uploads/
 
-dist/
-./dist
-
 build/
 ./build
 /build
 
-/electron/bin/
-
 # Node dependencies
 node_modules/
-
+electron/node_modules/
 # Build and dist folders
-dist/
+node_modules/
+
 build/
 output/
 temp_plots/
 temp_uploads/
-
-# Electron binaries
-electron/bin/
 
 # OS files
 .DS_Store
@@ -50,6 +43,7 @@ yarn-error.log*
 # IDE and editor settings
 .vscode/
 .idea/
+
 
 # Environment variables
 .env

@@ -1,3 +1,9 @@
+"""
+ Author: Ahmad Alhourani
+ GitHub: https://github.com/AhmadAlhourani19
+ Date Created: 23.06.2025
+ Unauthorized copying or reproduction is strictly prohibited.
+"""
 import os
 
 # === Sampling & Sweep ===

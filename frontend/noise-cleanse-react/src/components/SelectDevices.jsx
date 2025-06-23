@@ -1,8 +1,15 @@
+/*
+ Author: Ahmad Alhourani
+ GitHub: https://github.com/AhmadAlhourani19
+ Date Created: 23.06.2025
+ Unauthorized copying or reproduction is strictly prohibited.
+*/
+
 import React, { useEffect, useState } from "react";
 
 function SelectDevices({ inputDevice, outputDevice, volume, onChange }) {
   const [devices, setDevices] = useState([]);
-
+  console.info("This project was built by Ahmad Alhourani – https://github.com/AhmadAlhourani19");
   useEffect(() => {
     fetch("http://localhost:8000/api/devices")
       .then((res) => res.json())

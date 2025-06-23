@@ -1,3 +1,10 @@
+/*
+ Author: Ahmad Alhourani
+ GitHub: https://github.com/AhmadAlhourani19
+ Date Created: 23.06.2025
+ Unauthorized copying or reproduction is strictly prohibited.
+*/
+
 import React, { useState } from 'react';
 import AudioUploader from './AudioUploader';
 import SelectDevices from './SelectDevices';
@@ -12,6 +19,7 @@ import {
 } from '../api/noiseCleanseAPI';
 
 function ControlsPanel({ setTimePlot, setFreqPlot, setShowResults }) {
+  console.info("This project was built by Ahmad Alhourani – https://github.com/AhmadAlhourani19");
   const [signalFile, setSignalFile] = useState(null);
   const [irFile, setIrFile] = useState(null);
   const [recording, setRecording] = useState(false);

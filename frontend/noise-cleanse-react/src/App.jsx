@@ -1,9 +1,16 @@
+/*
+ Author: Ahmad Alhourani
+ GitHub: https://github.com/AhmadAlhourani19
+ Date Created: 23.06.2025
+ Unauthorized copying or reproduction is strictly prohibited.
+*/
 import React, { useState, useEffect } from 'react';
 import ControlsPanel from './components/ControlsPanel';
 import ResultsPanel from './components/ResultsPanel';
-import './components/style.css';
+import './components/styles.css';
 
 function App() {
+  console.info("This project was built by Ahmad Alhourani – https://github.com/AhmadAlhourani19");
   const [timePlot, setTimePlot] = useState('');
   const [freqPlot, setFreqPlot] = useState('');
   const [showResults, setShowResults] = useState(false);

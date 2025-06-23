@@ -1,3 +1,9 @@
+"""
+ Author: Ahmad Alhourani
+ GitHub: https://github.com/AhmadAlhourani19
+ Date Created: 23.06.2025
+ Unauthorized copying or reproduction is strictly prohibited.
+"""
 from fastapi import FastAPI, UploadFile, File, Query, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -57,13 +63,13 @@ def stop_recording():
     recorded_data = recorder
     recorder = None
 
-    print(f"🎤 Recorded shape: {recorded_data.shape}, dtype: {recorded_data.dtype}, size: {recorded_data.size}")
+    print(f"Recorded shape: {recorded_data.shape}, dtype: {recorded_data.dtype}, size: {recorded_data.size}")
 
     if recorded_data.size < 10:
         return {"status": "error", "message": "Recording too short or failed."}
 
     output_path = Path("output") / "speech_recorded.wav"
-    print(f"💾 Saving to: {output_path}")
+    print(f"Saving to: {output_path}")
     sf.write(output_path, recorded_data, config.FS)
     last_uploaded_signal = output_path
 
