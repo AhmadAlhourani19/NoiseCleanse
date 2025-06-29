@@ -382,3 +382,87 @@ body.dark-mode .form-row select {
   color: #fff;
   font-weight: 600;
 }
+
+/* === Buttons: Global Style === */
+.buttons-row button {
+  flex: 1;
+  padding: 0.75rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--r);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  font-size: 0.95rem;
+}
+
+/* === RECORDING === */
+.btn-record {
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  color: white;
+}
+.btn-record:hover {
+  box-shadow: 0 4px 12px rgba(255, 65, 108, 0.3);
+}
+
+/* === UPLOAD === */
+.btn-upload {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  color: white;
+}
+.btn-upload:hover {
+  box-shadow: 0 4px 12px rgba(0, 114, 255, 0.3);
+}
+
+/* === DECONVOLVE === */
+.btn-deconv {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: white;
+}
+.btn-deconv:hover {
+  box-shadow: 0 4px 12px rgba(106, 17, 203, 0.4);
+}
+
+/* === SAVE OUTPUT === */
+.btn-save {
+  background: linear-gradient(135deg, #f7971e, #ffd200);
+  color: #2D3748;
+}
+.btn-save:hover {
+  box-shadow: 0 4px 12px rgba(255, 210, 0, 0.4);
+}
+
+/* === PLAY OUTPUT === */
+.btn-play {
+  background: linear-gradient(135deg, #12c2e9, #c471ed);
+  color: white;
+}
+.btn-play:hover {
+  box-shadow: 0 4px 12px rgba(196, 113, 237, 0.4);
+}
+
+/* === VIEW GRAPHS === */
+.btn-view {
+  background: linear-gradient(135deg, #00f260, #0575e6);
+  color: white;
+}
+.btn-view:hover {
+  box-shadow: 0 4px 12px rgba(0, 242, 96, 0.3);
+}
+
+/* === RECORD IR === */
+.btn-ir {
+  background: linear-gradient(135deg, #ee0979, #ff6a00);
+  color: white;
+}
+.btn-ir:hover {
+  box-shadow: 0 4px 12px rgba(255, 106, 0, 0.4);
+}
+
+/* === LIVE DECONV === */
+.btn-live {
+  background: linear-gradient(135deg, #f85032, #e73827);
+  color: white;
+}
+.btn-live:hover {
+  box-shadow: 0 4px 12px rgba(248, 80, 50, 0.4);
+}

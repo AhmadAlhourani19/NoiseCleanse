@@ -32,12 +32,11 @@ def compute_inverse_fir(ir: np.ndarray, length: int, reg_lambda: float = None) -
     h = ir.flatten()
     H = toeplitz(h, np.zeros(length))
     d = np.zeros(H.shape[0])
-    d[0] = 1  # delta function
-
+    d[0] = 1 
+    
     regularized = H.T @ H + reg_lambda * np.eye(length)
     g = np.linalg.solve(regularized, H.T @ d)
 
-    # Normalize inverse filter
     g /= (np.sum(g**2) + 1e-9)
     return g
 

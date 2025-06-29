@@ -1,15 +1,8 @@
-/*
- Author: Ahmad Alhourani
- GitHub: https://github.com/AhmadAlhourani19
- Date Created: 23.06.2025
- Unauthorized copying or reproduction is strictly prohibited.
-*/
-
 import React from 'react';
 
 function ResultsPanel() {
   const timestamp = new Date().getTime(); 
-  console.info("This project was built by Ahmad Alhourani – https://github.com/AhmadAlhourani19");
+
   return (
     <div className="results-panel">
       <div className="plot-container">

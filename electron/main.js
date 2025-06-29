@@ -17,6 +17,7 @@ win.loadFile(path.join(__dirname, 'public', 'dist', 'index.html'));
   const backendPath = path.join(process.resourcesPath, 'bin', 'run_backend.exe');
   const backend = spawn(backendPath);
 
+  win.webContents.openDevTools();
   backend.stdout.on('data', data => {
     console.log(`[BACKEND]: ${data}`);
   });

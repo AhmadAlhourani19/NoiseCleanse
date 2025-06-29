@@ -61,3 +61,10 @@ yarn-error.log*
 *.bak
 *.tmp
 *.swp
+
+electron/bin/
+electron/dist/
+electron/public/run_backend.exe
+electron/public/run_backend.exe/
+
+Backend/dist/

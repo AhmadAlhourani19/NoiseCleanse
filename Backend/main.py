@@ -15,7 +15,6 @@ from Backend import (
     plotting
 )
 
-
 def menu():
     print("\n===== NoiseCleanse CLI Menu =====")
     print("1. Generate & Record Impulse Response")

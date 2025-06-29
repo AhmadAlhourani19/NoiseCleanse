@@ -4,6 +4,7 @@
  Date Created: 23.06.2025
  Unauthorized copying or reproduction is strictly prohibited.
 """
+
 import os
 
 # === Sampling & Sweep ===
@@ -32,7 +33,6 @@ LIVE_FRAME_SIZE = 1024
 LIVE_INV_LAMBDA = 1e-3      # Default Tikhonov lambda for FIR inversion
 LIVE_GAIN = 4.0             # Output gain multiplier
 
-# In Backend/config.py
 REG_LAMBDA = 0.01
 
 # === Paths ===
@@ -42,9 +42,8 @@ RESPONSE_FILE = os.path.join(OUTPUT_DIR, 'room_recorded.wav')
 IR_FILE = os.path.join(OUTPUT_DIR, 'impulse_response.wav')
 SPEECH_FILE = os.path.join(OUTPUT_DIR, 'speech_recorded.wav')
 RECOVERED_FILE = os.path.join(OUTPUT_DIR, 'recovered_output.wav')
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # === Plotting ===
 PLOT_DPI = 100
 
-# Create output directory if it doesn't exist
-os.makedirs(OUTPUT_DIR, exist_ok=True)

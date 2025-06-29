@@ -4,8 +4,9 @@
  Date Created: 23.06.2025
  Unauthorized copying or reproduction is strictly prohibited.
 """
+
 """
-Standalone launcher for the FastAPI backend – safe for PyInstaller/Electron.
+Standalone launcher for FastAPI backend – safe for PyInstaller/Tauri.
 """
 
 import sys
@@ -19,22 +20,19 @@ if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
 from Backend.restAPIBackend import app as fastapi_app
+
 from uvicorn.config import LOGGING_CONFIG as BASE_LOG
 
 log_cfg = copy.deepcopy(BASE_LOG)
 log_cfg["formatters"]["default"]["use_colors"] = False
 log_cfg["handlers"]["default"]["stream"] = "ext://sys.stdout"
 
-import sounddevice as sd
+log_cfg["formatters"].pop("access", None)
+log_cfg["handlers"].pop("access", None)
+log_cfg["loggers"]["uvicorn.access"] = {"handlers": [], "level": "INFO"}
 
 def main() -> None:
-    try:
-        print("Listing audio devices:")
-        devices = sd.query_devices()
-        for i, d in enumerate(devices):
-            print(f"  [{i}] {d['name']} (inputs: {d['max_input_channels']}, outputs: {d['max_output_channels']})")
-    except Exception as e:
-        print(f"Error listing audio devices: {e}")
+    print("Launching backend...")
 
     uvicorn.run(
         fastapi_app,

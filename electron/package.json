@@ -16,7 +16,9 @@
       "**/*"
     ],
     "extraResources": [
-      "bin/run_backend.exe"
+      "bin/run_backend.exe",
+      "output/**/*",
+      "temp_plots/**/*"
     ],
     "win": {
       "target": "portable"

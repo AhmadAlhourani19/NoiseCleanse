@@ -10,7 +10,6 @@ import ResultsPanel from './components/ResultsPanel';
 import './components/styles.css';
 
 function App() {
-  console.info("This project was built by Ahmad Alhourani – https://github.com/AhmadAlhourani19");
   const [timePlot, setTimePlot] = useState('');
   const [freqPlot, setFreqPlot] = useState('');
   const [showResults, setShowResults] = useState(false);

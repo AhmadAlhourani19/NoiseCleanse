@@ -4,6 +4,7 @@
  Date Created: 23.06.2025
  Unauthorized copying or reproduction is strictly prohibited.
 """
+
 from fastapi import FastAPI, UploadFile, File, Query, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -44,39 +45,68 @@ last_uploaded_ir = None
 @app.post("/api/record/start")
 def start_recording():
     global recorder
-    if recorder is not None:
-        return {"status": "error", "message": "Recording already in progress."}
-    duration_seconds = 10
-    fs = config.FS
-    print("Starting recording...")
-    recorder = sd.rec(int(duration_seconds * fs), samplerate=fs, channels=1)
-    return {"status": "recording started"}
+    try:
+        if recorder is not None:
+            return {"status": "error", "message": "Recording already in progress."}
+
+        fs = config.FS
+        duration = 10
+
+        devices = sd.query_devices()
+        default_input = sd.default.device[0] if sd.default.device else None
+
+        print("Listing audio input devices:")
+        for i, d in enumerate(devices):
+            print(f"[{i}] {d['name']} - inputs: {d['max_input_channels']}")
+
+        if default_input is None or default_input < 0 or devices[default_input]["max_input_channels"] == 0:
+            for i, d in enumerate(devices):
+                if d["max_input_channels"] > 0:
+                    default_input = i
+                    sd.default.device = (default_input, sd.default.device[1])
+                    print(f"Default input not valid — falling back to device {i}")
+                    break
+
+        if default_input is None or default_input < 0:
+            raise RuntimeError("No valid input device found.")
+
+        print(f"Using input device index: {default_input} ({devices[default_input]['name']})")
+        recorder = sd.rec(int(duration * fs), samplerate=fs, channels=1, device=default_input)
+        return {"status": "recording started"}
+
+    except Exception as e:
+        print(f"[ERROR] Recording failed: {e}")
+        raise HTTPException(status_code=500, detail=f"Recording failed: {e}")
 
 @app.post("/api/record/stop")
 def stop_recording():
     global recorder, last_uploaded_signal
     if recorder is None:
+        print("[ERROR] stop_recording called, but recorder is None.")
         return {"status": "error", "message": "No recording in progress."}
 
-    print("Stopping recording...")
-    sd.wait()
-    recorded_data = recorder
-    recorder = None
+    try:
+        sd.wait()
+        recorded_data = recorder
+        recorder = None
 
-    print(f"Recorded shape: {recorded_data.shape}, dtype: {recorded_data.dtype}, size: {recorded_data.size}")
+        if recorded_data is None or not hasattr(recorded_data, "size") or recorded_data.size < 10:
+            print("[ERROR] Recorded data is empty or invalid.")
+            return {"status": "error", "message": "Recording too short or failed."}
 
-    if recorded_data.size < 10:
-        return {"status": "error", "message": "Recording too short or failed."}
+        output_path = Path("output") / "speech_recorded.wav"
+        sf.write(output_path, recorded_data, config.FS)
+        last_uploaded_signal = output_path
 
-    output_path = Path("output") / "speech_recorded.wav"
-    print(f"Saving to: {output_path}")
-    sf.write(output_path, recorded_data, config.FS)
-    last_uploaded_signal = output_path
+        print(f"Recording saved: {output_path}")
+        return {
+            "status": "recorded",
+            "file": str(output_path)
+        }
 
-    return {
-        "status": "recorded",
-        "file": str(output_path)
-    }
+    except Exception as e:
+        print(f"[ERROR] Recording stop failed: {e}")
+        raise HTTPException(status_code=500, detail=f"Stopping recording failed: {e}")
 
 @app.post("/api/ir/full/offline")
 def run_full_ir_offline():

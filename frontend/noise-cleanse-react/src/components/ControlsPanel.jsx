@@ -1,10 +1,3 @@
-/*
- Author: Ahmad Alhourani
- GitHub: https://github.com/AhmadAlhourani19
- Date Created: 23.06.2025
- Unauthorized copying or reproduction is strictly prohibited.
-*/
-
 import React, { useState } from 'react';
 import AudioUploader from './AudioUploader';
 import SelectDevices from './SelectDevices';
@@ -19,7 +12,6 @@ import {
 } from '../api/noiseCleanseAPI';
 
 function ControlsPanel({ setTimePlot, setFreqPlot, setShowResults }) {
-  console.info("This project was built by Ahmad Alhourani – https://github.com/AhmadAlhourani19");
   const [signalFile, setSignalFile] = useState(null);
   const [irFile, setIrFile] = useState(null);
   const [recording, setRecording] = useState(false);
@@ -52,7 +44,6 @@ function ControlsPanel({ setTimePlot, setFreqPlot, setShowResults }) {
       }
     } catch (err) {
       console.error(err);
-      setFeedback('Recording error.');
     }
   };
 
@@ -126,27 +117,56 @@ function ControlsPanel({ setTimePlot, setFreqPlot, setShowResults }) {
         <div className="drop-message">Drag & Drop IR here<br />or click to upload</div>
         <AudioUploader label="" id="irFile" onFileSelect={setIrFile} />
       </div>
-
-      <div className="form-row">
-        <label htmlFor="irSelect">Select IR</label>
-        <select id="irSelect" defaultValue="">
-          <option value="">— choose preset —</option>
-          <option>Hall</option>
-          <option>Room</option>
-          <option>Plate</option>
-        </select>
-      </div>
-
       <div className="buttons-row">
         <button className="btn-record" onClick={handleRecord}>{recording ? '⏹ Stop' : '● Record'}</button>
-        <button className="btn-upload">⬆️ Upload</button>
+        <button
+          className="btn-save"
+          onClick={async () => {
+            try {
+              const res = await fetch("http://localhost:8000/output/speech_recorded.wav");
+              const blob = await res.blob();
+              const url = window.URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              a.href = url;
+              a.download = "speech_recorded.wav";
+              document.body.appendChild(a);
+              a.click();
+              a.remove();
+              setFeedback("Speech recording saved.");
+            } catch (err) {
+              console.error(err);
+              setFeedback("Failed to save speech recording.");
+            }
+          }}
+        >
+          💾 Save Speech
+        </button>
       </div>
-
       <div className="buttons-row">
         <button className="btn-deconv" onClick={handleOfflineDeconv}>⚙️ Deconvolve</button>
-        <button className="btn-save">💾 Save</button>
+        <button
+          className="btn-save"
+          onClick={async () => {
+            try {
+              const res = await fetch("http://localhost:8000/output/recovered_output.wav");
+              const blob = await res.blob();
+              const url = window.URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              a.href = url;
+              a.download = "recovered_output.wav";
+              document.body.appendChild(a);
+              a.click();
+              a.remove();
+              setFeedback("Recovered output saved.");
+            } catch (err) {
+              console.error(err);
+              setFeedback("Failed to save recovered output.");
+            }
+          }}
+        >
+          💾 Save
+        </button>
       </div>
-
       <div className="buttons-row">
         <button className="btn-play" onClick={() => {
           const audio = new Audio("http://localhost:8000/output/recovered_output.wav");
@@ -160,6 +180,28 @@ function ControlsPanel({ setTimePlot, setFreqPlot, setShowResults }) {
       <div className="buttons-row">
         <button className="btn btn-ir" onClick={handleRecordFullIR}>
           🎤 Record Impulse Response
+        </button>
+         <button
+          className="btn-save"
+          onClick={async () => {
+            try {
+              const res = await fetch("http://localhost:8000/output/impulse_response.wav");
+              const blob = await res.blob();
+              const url = window.URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              a.href = url;
+              a.download = "impulse_response.wav";
+              document.body.appendChild(a);
+              a.click();
+              a.remove();
+              setFeedback("Impulse response saved.");
+            } catch (err) {
+              console.error(err);
+              setFeedback("Failed to save impulse response.");
+            }
+          }}
+        >
+          💾 Save IR
         </button>
         <button className="btn-live" onClick={handleLiveToggle}>
           {liveRunning ? '⏹ Stop Live Deconvolution' : '🔴 Start Live Deconvolution'}
