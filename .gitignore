@@ -68,3 +68,9 @@ electron/public/run_backend.exe
 electron/public/run_backend.exe/
 
 Backend/dist/
+
+electron/dist/
+Backend/dist/
+dist/
+*.exe
+*.asar
