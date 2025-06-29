@@ -1,76 +1,44 @@
-./temp_uploads
-/temp_uploads
-/temp_plots
-./temp_plots
-
-./output
-/output
-
-/run_backend.spec
-output/
-temp_plots/
-temp_uploads/
-
-./output/
-./temp_plots/
-./temp_uploads/
-
-build/
-./build
-/build
-
-# Node dependencies
+# Node.js
 node_modules/
+*.log
+npm-debug.log*
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg
+*.egg-info/
+dist/
+build/
+*.spec
+
+# Electron
+electron/dist/
 electron/node_modules/
-# Build and dist folders
-node_modules/
+electron/bin/
+electron/public/dist/
 
-build/
-output/
-temp_plots/
-temp_uploads/
+# Frontend React
+frontend/noise-cleanse-react/node_modules/
+frontend/noise-cleanse-react/dist/
+frontend/noise-cleanse-react/.vite/
+
+# Executables and binaries
+*.exe
+*.dll
+*.so
+*.dylib
+*.asar
+
+# VSCode and environment
+.vscode/
+.env
+.env.*
 
 # OS files
 .DS_Store
 Thumbs.db
 
-# Logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# IDE and editor settings
-.vscode/
-.idea/
-
-
-# Environment variables
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# Lock files (optional: keep one consistent lockfile if needed)
-# package-lock.json
-# yarn.lock
-# pnpm-lock.yaml
-
-# Misc
-*.bak
-*.tmp
-*.swp
-
-electron/bin/
-electron/dist/
-electron/public/run_backend.exe
-electron/public/run_backend.exe/
-
-Backend/dist/
-
-electron/dist/
-Backend/dist/
-dist/
-*.exe
-*.asar
+# General output folders
+/run_backend.exe
+run_backend/
